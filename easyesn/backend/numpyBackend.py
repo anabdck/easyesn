@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import random
 import scipy as sp
-from scipy.sparse.linalg.eigen.arpack.arpack import ArpackNoConvergence
+from scipy.sparse.linalg import ArpackNoConvergence
 
 add = np.add
 
