@@ -261,7 +261,8 @@ class BaseESN(object):
             return X
 
     """
-        Generates a random rotation matrix, used in the SORM initilization (see http://ftp.math.uni-rostock.de/pub/preprint/2012/pre12_01.pdf)
+        Generates a random rotation matrix, used in the SORM initilization
+        (see http://ftp.math.uni-rostock.de/pub/preprint/2012/pre12_01.pdf)
     """
 
     def create_random_rotation_matrix(self):
@@ -287,6 +288,7 @@ class BaseESN(object):
         # naive generation of the matrix W by using random weights
         if weightGeneration == "naive":
             # random weight matrix from -0.5 to 0.5
+            B.random.seed(1)
             self._W = B.array(B.rand(self.n_reservoir, self.n_reservoir) - 0.5)
 
             # set sparseness% to zero

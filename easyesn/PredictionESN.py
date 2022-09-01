@@ -308,11 +308,14 @@ class PredictionESN(BaseESN):
         update_processor=lambda x: x,
         verbose=0,
     ):
-        # initialOutputData is the output of the last step BEFORE the generation shall start, e.g. the last step of the training's output
+        # initialOutputData is the output of the last step BEFORE the generation
+        #   shall start, e.g. the last step of the training's output
 
         # check the input data
         # if (self.n_input != self.n_output):
-        #    raise ValueError("n_input does not equal n_output. The generation mode uses its own output as its input. Therefore, n_input has to be equal to n_output - please adjust these numbers!")
+        #    raise ValueError("n_input does not equal n_output. The generation
+        #       mode uses its own output as its input. Therefore, n_input has to be
+        #       equal to n_output - please adjust these numbers!")
 
         if inputData is not None:
             inputData = B.array(inputData)
