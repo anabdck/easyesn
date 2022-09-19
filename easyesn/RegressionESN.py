@@ -197,7 +197,7 @@ class RegressionESN(BaseESN):
             # calculate the training prediction now
             train_prediction = self.out_activation((B.dot(self._WOut, self._X)).T)
 
-        elif self._solver == "lsqr":
+        elif self._solver == "lsqr": #hY*X.T*(X*X.T + alpha*I)^-1
             X_T = self._X.T
             self._WOut = B.dot(
                 B.dot(Y_target, X_T),
