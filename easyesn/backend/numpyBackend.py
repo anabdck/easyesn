@@ -50,6 +50,8 @@ def eigvals(x):
 
 array = np.array
 
+reshape = np.reshape
+
 inv = np.linalg.inv
 
 pinv = np.linalg.pinv

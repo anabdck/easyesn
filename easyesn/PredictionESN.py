@@ -107,6 +107,13 @@ class PredictionESN(BaseESN):
                 sklearn_sag
         """
 
+        if self._solver == "rlsqr":
+            self.rlsqr_alpha = self._regressionParameters[0]
+            self.rlsqr_lambda = self._regressionParameters[1]
+
+            n_ = int(1.0 + self.n_input + self.n_reservoir)
+            self._WOut = B.zeros((self.n_output, n_))
+            self.rlsq_P = B.dot(B.identity(n_), self.rlsqr_alpha)
     """
         Fits the ESN so that by applying the inputData the outputData will be produced.
     """
@@ -247,6 +254,8 @@ class PredictionESN(BaseESN):
                     * B.identity(1 + self.n_input + self.n_reservoir)
                 ),
             )
+            # calculate the training prediction now
+            train_prediction = self.out_activation(B.dot(self._WOut, self._X).T)
 
             """
                 #alternative represantation of the equation
@@ -260,9 +269,25 @@ class PredictionESN(BaseESN):
                 self._WOut = np.dot(B, A)
                 self._WOut = self._WOut.T
             """
+        elif self._solver == "rlsqr":
+
+            X_T = self._X.T
+
+            cc = B.reshape(self.rlsqr_lambda*(self.rlsqr_lambda + (B.dot(X_T, self.rlsq_P).dot(self._X))), (1,1))
+            bb = B.dot(self.rlsq_P, (B.dot(B.dot(self._X, X_T), self.rlsq_P)))
+            aa = self.rlsq_P/self.rlsqr_lambda
+
+            self.rlsq_P =  aa - bb/cc
+
+
+            err = (self.out_activation(B.dot(self._WOut, self._X).T) - outputData)[0]
 
             # calculate the training prediction now
             train_prediction = self.out_activation(B.dot(self._WOut, self._X).T)
+
+            self._WOut = self._WOut - (B.dot(err*self.rlsq_P, self._X)).T
+
+
 
         elif self._solver in [
             "sklearn_auto",
@@ -451,3 +476,9 @@ class PredictionESN(BaseESN):
         pipe.fit(
             trainingInput, trainingOutput, validationInput, validationOutput, verbose
         )
+
+    def banana():
+        print("BANANAS!")
+
+    def print_WOut(self):
+        return self._WOut

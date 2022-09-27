@@ -94,7 +94,7 @@ class BaseESN(object):
         self.out_inverse_activation = out_inverse_activation
 
         if randomSeed is not None:
-            B.seed(randomSeed)
+            #B.seed(randomSeed)
             np.random.seed(randomSeed)
 
         self._bias = bias
@@ -288,7 +288,7 @@ class BaseESN(object):
         # naive generation of the matrix W by using random weights
         if weightGeneration == "naive":
             # random weight matrix from -0.5 to 0.5
-            B.random.seed(1)
+            #B.random.seed(1)
             self._W = B.array(B.rand(self.n_reservoir, self.n_reservoir) - 0.5)
 
             # set sparseness% to zero
