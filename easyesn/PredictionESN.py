@@ -280,7 +280,8 @@ class PredictionESN(BaseESN):
             self.rlsq_P =  aa - bb/cc
 
 
-            err = (self.out_activation(B.dot(self._WOut, self._X).T) - outputData)[0]
+            #err = (self.out_activation(B.dot(self._WOut, self._X).T) - outputData)[0]
+            err = (B.dot(self._WOut, self._X).T - outputData)[0]
 
             # calculate the training prediction now
             train_prediction = self.out_activation(B.dot(self._WOut, self._X).T)
