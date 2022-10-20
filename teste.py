@@ -16,19 +16,26 @@ u = t_y_u[:, 2]
 
 n = 6
 
+# %%
 esn = PredictionESN(n_input=2*n,
                     n_output=1,
-                    spectralRadius=0.5,
+                    spectralRadius=1,
                     n_reservoir=150,
-                    noiseLevel=2,
+                    noiseLevel=0,
                     randomSeed=1,
-                    regressionParameters=[0.5, 0.95], #[alpha, lambda]
+                    regressionParameters=[1, 1], #[alpha, lambda]
                     solver="rlsqr",
                     bias=1,
                     outputBias=1,
                     feedback=False)
 
+# %%
+
 err = []
+WOut_norm = []
+
+#PredictionESN.save(esn,'teste')
+
 
 # %%
 
@@ -46,18 +53,28 @@ for i in range(n, len(t)-2):
     o = y[i-2]
     o = np.reshape(o, (1,1))
     err.append(esn.fit(x, o, transientTime=0, verbose=0))
+    WOut_norm.append(np.linalg.norm(esn._WOut))
 
-# %% plot
+PredictionESN.save(esn,'teste')
+# %%np.diff
 plt.close('all')
 ax = plt.figure(1, figsize =(8,4))
-plt.plot(err, label='$e[k]$')
+#plt.plot(err, label='$e[k]$')
+plt.plot(WOut_norm, label='$||W_{out}||$')
+#plt.plot(np.diff(WOut_norm, 1), label='$d||W_{out}||$')
 plt.xlabel('amostras')
 plt.legend()
 plt.grid( alpha=0.35)
 plt.show()
 
-err[-1]
 # %%
+np.linalg.norm(esn._WOut)
+esn = PredictionESN.load('teste')
+
+np.linalg.norm(esn._WOut)
+
+s# %%
+
 o_esn = []
 Au = np.flip(u[1:n+1])
 Ay = np.flip(y[0:n])

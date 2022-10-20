@@ -279,16 +279,18 @@ class PredictionESN(BaseESN):
 
             self.rlsq_P =  aa - bb/cc
 
+            #if max(B.eig(self.rlsq_P)[0]) > 1e20:
+                #print("P-Matrix eigenvalues: " + str(B.eig(self.rlsq_P)[0]))
+                #raise ValueError("P-Matrix eigenvalues becomes infinite")
 
-            #err = (self.out_activation(B.dot(self._WOut, self._X).T) - outputData)[0]
-            err = (B.dot(self._WOut, self._X).T - outputData)[0]
+            err = (self.out_activation(B.dot(self._WOut, self._X).T) - outputData)[0]
+            #err = (B.dot(self._WOut, self._X).T - outputData)[0]
 
             # calculate the training prediction now
             train_prediction = self.out_activation(B.dot(self._WOut, self._X).T)
 
             self._WOut = self._WOut - (B.dot(err*self.rlsq_P, self._X)).T
-
-
+            #WOut_norm = B.norm(self._WOut)
 
         elif self._solver in [
             "sklearn_auto",
@@ -318,6 +320,7 @@ class PredictionESN(BaseESN):
         # flatten the outputData
         outputData = outputData[:, transientTime:, :].reshape(totalLength, -1)
         training_error = B.sqrt(B.mean((train_prediction - outputData) ** 2))
+
         return training_error
 
     """

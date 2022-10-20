@@ -107,3 +107,7 @@ allclose = np.allclose
 ptp = np.ptp
 
 randint = random.randint
+
+eig = np.linalg.eig
+
+norm = np.linalg.norm
