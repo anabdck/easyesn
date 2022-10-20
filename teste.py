@@ -34,9 +34,6 @@ esn = PredictionESN(n_input=2*n,
 err = []
 WOut_norm = []
 
-#PredictionESN.save(esn,'teste')
-
-
 # %%
 
 Au = np.flip(u[1:n+1])
@@ -68,13 +65,6 @@ plt.grid( alpha=0.35)
 plt.show()
 
 # %%
-np.linalg.norm(esn._WOut)
-esn = PredictionESN.load('teste')
-
-np.linalg.norm(esn._WOut)
-
-s# %%
-
 o_esn = []
 Au = np.flip(u[1:n+1])
 Ay = np.flip(y[0:n])
