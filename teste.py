@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
 
-t_y_u = np.genfromtxt('/home/ana/mestrado/projeto/minimos_quadrados/taco-generator-data.csv', delimiter=',')[1:,:]
+t_y_u = np.genfromtxt('/home/ana/mestrado/projeto/simulações/minimos_quadrados/taco-generator-data.csv', delimiter=',')[1:,:]
 
 t = t_y_u[:, 0]
 y = t_y_u[:, 1]
